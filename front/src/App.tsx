@@ -1,8 +1,8 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import Main from './components/pages/Main';
+import Login from './components/pages/Login';
 import Interest from './components/pages/Interest';
 import Map from './components/pages/Map';
 import { QueryClient, QueryClientProvider } from 'react-query';
