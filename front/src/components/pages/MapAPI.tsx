@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useGetFoodDataAfterClick } from './useGetFoodDataAfterClick';
 
 import { MapData } from '../../mocks/handlers/festival_list';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -11,6 +11,9 @@ import tw from 'twin.macro';
 import FestivalMap from '../organisms/FestivalMap';
 import FestivalDetail from '../organisms/FestivalDetail';
 import getFestivalItem from '../../api/getFestivalItem';
+import getWeather from '../../api/getWeather';
+import getFestivalNews from '../../api/getFestivalNews';
+import getFestivalList from '../../api/getFestivalList';
 
 const MapAPIContainer = styled.div`
   ${tw`flex flex-row`}
@@ -39,10 +42,7 @@ const MapAPI = () => {
 
   const MAPIDX = id && parseInt(id);
   // 축제 좌표 불러오기
-  const mapData = useQuery<MapData[], AxiosError>(['Maps'], async () => {
-    const response = await axios.get('/festival-service/list');
-    return response.data;
-  });
+  const mapData = useQuery<MapData[], AxiosError>(['Maps'], getFestivalList);
 
   // 맛집 데이터 불러오기
   const restaurantData = useGetFoodDataAfterClick();
@@ -57,14 +57,34 @@ const MapAPI = () => {
     };
   };
 
-  const { data, isLoading, isError } = useQuery(['info'], getFestivalItem, {
-    staleTime: 1000 * 20,
+  // 축제 상세 정보 불러오기
+  const { data } = useQuery(['info'], getFestivalItem, {
+    refetchOnWindowFocus: false,
+  });
+
+  const x = 35;
+  const y = 127;
+  // 날씨 정보 가져오기
+  const weatherInfo = useQuery(['weather'], () => getWeather(x, y), {
+    enabled: !!data?.title,
+    refetchOnWindowFocus: false,
+  });
+
+  // 뉴스 정보 가져오기
+  const newsInfo = useQuery(['news'], () => getFestivalNews(data?.title), {
+    enabled: !!data?.title,
+    refetchOnWindowFocus: false,
   });
 
   return (
     <MapAPIContainer>
       <StyledFestivalDetail>
-        <FestivalDetail info={data} navigate={navigate} />
+        <FestivalDetail
+          info={data}
+          weatherInfo={weatherInfo?.data}
+          newsInfo={newsInfo?.data}
+          navigate={navigate}
+        />
       </StyledFestivalDetail>
       <StyledMapAPI>
         {mapData.isLoading || !MAPIDX ? (
