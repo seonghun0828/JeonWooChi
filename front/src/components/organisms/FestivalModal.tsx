@@ -1,6 +1,9 @@
-import { Dispatch, SetStateAction } from 'react';
-import styled, { css } from 'styled-components';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import tw from 'twin.macro';
+import { MapData } from '../../mocks/handlers/festival_list';
+import eventEmitter from '../../utils/eventEmitter';
 import Button from '../atoms/Button';
 import Image from '../atoms/Image';
 import Sheet from '../atoms/Sheet';
@@ -9,16 +12,9 @@ import FestivalInfos from './FestivalInfos';
 import TitleCancelHeader from './TitleCancelHeader';
 
 interface PropTypes {
-  info:
-    | {
-        title: string;
-        period: string;
-        festivalUrl: string;
-        posterUrl: string;
-        description: string;
-      }
-    | undefined;
+  info: MapData | null;
   setState: Dispatch<SetStateAction<boolean>>;
+  intervalId: number;
 }
 const StyledFestivalModal = styled.div`
   ${tw`absolute `}
@@ -53,7 +49,21 @@ const RightBody = styled.div`
  *
  * @author jojo
  */
-const FestivalModal = ({ info, setState }: PropTypes) => {
+const FestivalModal = ({ info, setState, intervalId }: PropTypes) => {
+  // console.log(info);
+  const navigate = useNavigate();
+
+  const linkToMapApiPageHandler = (info: MapData | undefined) => {
+    if (info?.id) {
+      // console.log(info);
+
+      clearInterval(intervalId);
+      navigate(`/map/${info.id}`, { state: info });
+    } else {
+      console.log('에러나버림');
+    }
+  };
+
   return (
     <StyledFestivalModal>
       <Sheet transparent>
@@ -61,17 +71,20 @@ const FestivalModal = ({ info, setState }: PropTypes) => {
           <InnerSheet>
             <TitleCancelHeader
               setState={setState}
-              title={info.title}
+              title={info.festivalName}
               color="white"
             />
             <SheetBody>
               <LeftBody>
-                <Image src={info.posterUrl} alt="poster" />
+                <Image src={info.image} alt="poster" />
               </LeftBody>
               <RightBody>
                 <FestivalInfos info={info} size={1.3} />
-                <Button isText>
-                  <Text message={'상세보기'} />
+                <Button
+                  isText
+                  clickHandler={() => linkToMapApiPageHandler(info)}
+                >
+                  <Text message={'상세보기'} color="black" />
                 </Button>
               </RightBody>
             </SheetBody>

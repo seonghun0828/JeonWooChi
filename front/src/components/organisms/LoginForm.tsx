@@ -4,6 +4,13 @@ import Sheet from '../atoms/Sheet';
 import Button from '../atoms/Button';
 import Text from '../atoms/Text';
 import Image from '../atoms/Image';
+import { useNavigate } from 'react-router-dom';
+
+const KAKAO_KEY = process.env.REACT_APP_KAKAO_KEY ?? '';
+const REDIRECT_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000/login/kakao'
+    : 'https://j7b305.p.ssafy.io/login/kakao';
 
 const SheetWrapper = styled.section`
   ${tw`flex flex-col gap-2`}
@@ -42,20 +49,19 @@ const GuestButtonContainer = styled.div`
  *
  * @author Sckroll
  */
-// TODO: 시트 패딩 간격 넓히기
 const LoginForm = () => {
-  const kakaoLoginHandler = () => {
-    console.log('kakao');
+  const navigate = useNavigate();
+
+  const kakaoLoginHandler = async () => {
+    location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_KEY}&redirect_uri=${REDIRECT_URL}&response_type=code`;
   };
-  const googleLoginHandler = () => {
-    console.log('google');
-  };
-  const guestLoginHandler = () => {
-    console.log('guest');
-  };
+  // const googleLoginHandler = () => {
+  //   console.log('google');
+  // };
+  const guestLoginHandler = () => navigate('/game');
 
   return (
-    <Sheet transparent>
+    <Sheet transparent wide>
       <SheetWrapper>
         <TempTitle>전우치 - 전국 우리 지역잔치</TempTitle>
         <ButtonContainer>
@@ -67,11 +73,11 @@ const LoginForm = () => {
                   alt="Kakao logo"
                 />
               </IconImageContainer>
-              <Text message="카카오로 로그인하기" color="#000000d9" />
+              <Text message="카카오로 로그인하기" color="black" />
             </>
           </Button>
         </ButtonContainer>
-        <ButtonContainer>
+        {/* <ButtonContainer>
           <Button isText color="#ffffff" clickHandler={googleLoginHandler}>
             <>
               <IconImageContainer>
@@ -80,14 +86,14 @@ const LoginForm = () => {
                   alt="Google logo"
                 />
               </IconImageContainer>
-              <Text message="구글로 로그인하기" />
+              <Text message="구글로 로그인하기" color="black" />
             </>
           </Button>
-        </ButtonContainer>
+        </ButtonContainer> */}
         <ButtonContainer>
           <Button isText clickHandler={guestLoginHandler}>
             <GuestButtonContainer>
-              <Text message="비회원으로 시작하기" />
+              <Text message="비회원으로 시작하기" color="black" />
             </GuestButtonContainer>
           </Button>
         </ButtonContainer>
