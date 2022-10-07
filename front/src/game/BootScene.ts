@@ -111,7 +111,7 @@ class BootScene extends Scene {
     const prevSpawnPoint = localStorage.getItem('spawnLocation');
     let spawnX: number, spawnY: number;
     if (prevSpawnPoint) {
-      const { X: prevX, y: prevY } = JSON.parse(prevSpawnPoint);
+      const { x: prevX, y: prevY } = JSON.parse(prevSpawnPoint);
       spawnX = prevX || 0;
       spawnY = prevY || 0;
     } else {
