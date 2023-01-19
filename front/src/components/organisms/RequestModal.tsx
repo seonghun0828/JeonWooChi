@@ -205,21 +205,6 @@ const RequestModal = ({ setState }: PropTypes) => {
                 />
               </FlexInput>
             </InputLine>
-            {/* <InputLine>
-              <FlexLabel>
-                <Label color="white" htmlFor={inputProps[5][0]}>
-                  {labelProps[5]}
-                </Label>
-              </FlexLabel>
-              <FlexInput>
-                <Select
-                  value={select}
-                  setValue={setSelect}
-                  name={inputProps[6][0]}
-                  id={inputProps[6][0]}
-                />
-              </FlexInput>
-            </InputLine> */}
             <InputLine>
               <FlexLabel>
                 <Label color="white" htmlFor={inputProps[6][0]}>
