@@ -63,7 +63,7 @@ const Minimap = ({
   festivalList,
   focusedIdx,
   selectedFestivals,
-}: // 얘를 받아와서 어떻게 뿌려주지~~~?
+}:
 PropTypes) => {
   const playerLocation = convertXYGameToMinimap(x, y);
 
