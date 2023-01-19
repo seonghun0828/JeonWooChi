@@ -58,27 +58,10 @@ const SubmitButton = styled.div`
   ${tw`flex justify-center`}
   width: 100%;
 `;
-// const inputProps = [
-//   ['festivalName', 'text'],
-//   ['startDate', 'date'],
-//   ['endDate', 'date'],
-//   ['fee', 'text'],
-//   ['address', 'text'],
-//   ['image', 'file', 'image/*'],
-//   ['description', 'text'],
-// ];
-// const labelProps = [
-//   '축제 이름',
-//   '축제 시작일',
-//   '축제 종료일',
-//   '이용 요금',
-//   '축제 주소',
-//   '포스터 이미지',
-//   '축제 설명',
-// ];
+
 /**
- * 축제 요청 모달. 로그인한 유저만 요청 가능.
- * Inputs들을 전부 채워야 요청 가능
+ * 축제 요청 상세 모달.
+ * 축제 요청에 대한 자세한 정보를 보고 승인할 수 있다.
  *
  * @author jojo
  */
@@ -129,51 +112,6 @@ const RequestConfirmModal = ({ setState, setOpenedList }: PropTypes) => {
                 </InputLine>
               );
             })}
-            {/* <InputLine>
-              <FlexLabel>
-                <Label color="white" htmlFor={inputProps[4][0]}>
-                  {labelProps[4]}
-                </Label>
-              </FlexLabel>
-              <FlexInput>
-                <Input
-                  type={inputProps[4][1]}
-                  name={inputProps[4][0]}
-                  id={inputProps[4][0]}
-                  accept={inputProps[4][2]}
-                  className="file-uploader"
-                />
-              </FlexInput>
-            </InputLine>
-            <InputLine>
-              <FlexLabel>
-                <Label color="white" htmlFor={inputProps[5][0]}>
-                  {labelProps[5]}
-                </Label>
-              </FlexLabel>
-              <FlexInput>
-                <Select
-                  value={select}
-                  setValue={setSelect}
-                  name={inputProps[6][0]}
-                  id={inputProps[6][0]}
-                />
-              </FlexInput>
-            </InputLine>
-            <InputLine>
-              <FlexLabel>
-                <Label color="white" htmlFor={inputProps[6][0]}>
-                  {labelProps[6]}
-                </Label>
-              </FlexLabel>
-              <FlexInput>
-                <Textarea
-                  id={inputProps[6][0]}
-                  height={15}
-                  setValue={setTextarea}
-                />
-              </FlexInput>
-            </InputLine> */}
           </SheetBody>
           <SubmitButton>
             <Button isText clickHandler={submitRequestHandler}>
