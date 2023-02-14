@@ -61,8 +61,6 @@ const FestivalModal = ({
     if (info?.id) {
       clearInterval(intervalId);
       navigate(`/map/${info.id}`, { state: info });
-    } else {
-      console.log('에러나버림');
     }
   };
 
